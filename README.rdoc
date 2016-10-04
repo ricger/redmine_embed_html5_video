@@ -8,21 +8,27 @@ Tested redmine 3.3.0, with ruby 2.1.5.
 - restart redmine
 
 Usage:
-
-* `{{video(<ATTACHEMENT>|<URL>|<YOUTUBE_URL>[,<width>,<height>])}}`
+* `{{video(<ATTACHEMENT>|<URL>|<YOUTUBE_URL>[,<width>,<height>,<controls>])}}`
+* Supported video formats: mp4 / ogg / webm 
+* + embedding videos on youtube.com or vimeo.com
 
 For external urls just use the complete url to the video:
 * `{{video(https://cdn.theguardian.tv/mainwebsite/2015/07/20/150716YesMen_desk.mp4)}}`
 
-Some video hosters (e.g. youtube, vimeo) need embedding in iframe, just paste youtube/vimeo url
+For issue-attached videos, don't use any path in front of attachment filename
+* `{{video(History.mp4)}}`
+
+Video hosters (youtube, vimeo) need embedding in iframe, just paste youtube/vimeo url
 * `{{video(https://youtu.be/o9aA9wCQ9co)}}`
  
-You can fore video width and height:
+You can force video width and height:
 * `{{video(https://youtu.be/o9aA9wCQ9co[,640,480])}}`
 
 For relative scale just enter one value:
 * `{{video(https://youtu.be/o9aA9wCQ9co[,640,])}}`
 
-For attached videos, don't use any path in front of attachment filename
-* `{{video(History.mp4)}}`
+Unless you're using vimeo the <control> parameter allows hiding videocontrols
+* `{{video(https://youtu.be/o9aA9wCQ9co[,640,,0])}}`
+
+
 
