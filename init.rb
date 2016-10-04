@@ -2,7 +2,7 @@ Redmine::Plugin.register :redmine_embed_html5_video do
   name 'Embed Html5 Video plugin'
   author 'Richard Gertis'
   description 'Embeds attachment videos, video URLs, Youtube or Vimeo videos. Usage (as macro): video(ID|URL|YOUTUBE_URLi|VIMEO_URL). Updated to HTML5'
-  version '0.0.2'
+  version '0.0.3'
   url 'https://github.com/ricger/redmine_embed_html5_video'
   author_url 'https://github.com/ricger/redmine_embed_html5_video'
 end
@@ -11,13 +11,12 @@ Redmine::WikiFormatting::Macros.register do
     desc "Wiki embed html5 video:\n\n" +
 	"{{video(file [, width] [, height], [, controls])}}"
     macro :video do |obj, args|
-	#controls    = true
         width      = args[1].gsub(/\D/,'') if args[1]
         height     = args[2].gsub(/\D/,'') if args[2]
 	controls   = args[3]
         width    ||= 400
         height   ||= 300
-	if (controls == '0' || controls == 'false') 
+	if (controls == '0' || controls == 0 || controls == nil || controls == 'false') 
 		controls = nil
 	else 
 		controls = true
@@ -35,10 +34,16 @@ Redmine::WikiFormatting::Macros.register do
 	case file_url
 	# check for youtube-URL, extract youtubeID and assign to local variable {youtubeID}
 	when /^https?:\/\/((www\.)?youtube\.com\/(watch\?([\w\d\=]*\&)*v=|embed\/){1}|youtu\.be\/)(?<youtubeID>[\w\d\-]*)((\&|\/)[\w\d\=\-]*)*$/
-		video_url = "https://www.youtube.com/embed/#{$LAST_MATCH_INFO['youtubeID']}"
+		if !controls
+			yt_params="?controls=0"
+		else
+			yt_params="?nix=#{controls}"
+		end
+		video_url = "https://www.youtube.com/embed/#{$LAST_MATCH_INFO['youtubeID']}#{yt_params}"
 		embed_typ = "iframe"
 	# check for vimeo-URL...
         when /^https?:\/\/(www\.)?vimeo\.com\/(?<vimeoID>[\d]*)((\D)[\w\d\=\-]*)*$/
+		# hiding video-controls not possible at vimeo.com
                 video_url = "https://player.vimeo.com/video/#{$LAST_MATCH_INFO['vimeoID']}"
                 embed_typ = "iframe"
 	else
@@ -57,7 +62,7 @@ Redmine::WikiFormatting::Macros.register do
 
 	case embed_typ
 	when "iframe"
-		content_tag(:iframe, nil, :src  => video_url, :width => width, :height => height, :controls => controls )
+		content_tag(:iframe, nil, :src  => video_url, :width => width, :height => height )
 	else
 		content_tag(:video, tag(:source, :src => video_url, :type => mime_type ) ,  :width => width, :height => height, :controls => controls )
 	end
