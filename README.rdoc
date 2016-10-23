@@ -1,4 +1,4 @@
-= redmine_embedded_html5_video
+= redmine_embed_html5_video
 
 Author: Richard Gertis
 
