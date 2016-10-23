@@ -2,33 +2,33 @@
 
 Author: Richard Gertis
 
-Tested redmine 3.3.0, with ruby 2.1.5.
+Tested redmine 3.3, with ruby 2.1.5.
 
 - git clone into redmine to plugins directory
 - restart redmine
 
 Usage:
-* `{{video(<ATTACHEMENT>|<URL>|<YOUTUBE_URL>[,<width>,<height>,<controls>])}}`
+* {{video(<ATTACHEMENT>|<URL>|<YOUTUBE_URL>[,<width>,<height>,<controls>])}}
 * Supported video formats: mp4 / ogg / webm 
 * + embedding videos on youtube.com or vimeo.com
 
 For external urls just use the complete url to the video:
-* `{{video(https://cdn.theguardian.tv/mainwebsite/2015/07/20/150716YesMen_desk.mp4)}}`
+* {{video(https://cdn.theguardian.tv/mainwebsite/2015/07/20/150716YesMen_desk.mp4)}}
 
 For issue-attached videos, don't use any path in front of attachment filename
-* `{{video(History.mp4)}}`
+* {{video(History.mp4)}}
 
 Video hosters (youtube, vimeo) need embedding in iframe, just paste youtube/vimeo url
-* `{{video(https://youtu.be/o9aA9wCQ9co)}}`
+* {{video(https://youtu.be/o9aA9wCQ9co)}}
  
 You can force video width and height:
-* `{{video(https://youtu.be/o9aA9wCQ9co[,640,480])}}`
+* {{video(https://youtu.be/o9aA9wCQ9co[,640,480])}}
 
 For relative scale just enter one value:
-* `{{video(https://youtu.be/o9aA9wCQ9co[,640,])}}`
+* {{video(https://youtu.be/o9aA9wCQ9co[,640,])}}
 
 Unless you're using vimeo the <control> parameter allows hiding videocontrols
-* `{{video(https://youtu.be/o9aA9wCQ9co[,640,,0])}}`
+* {{video(https://youtu.be/o9aA9wCQ9co[,640,,0])}}
 
 
 
